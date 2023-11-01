@@ -1,4 +1,4 @@
-package Application;
+package Application.Controller;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -7,18 +7,32 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.autoconfigure.amqp.RabbitProperties.Cache.Connection;
-import org.springframework.stereotype.Controller;
+import org.springframework.boot.context.config.ConfigData;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import Application.Models.DBconfig;
+import Application.Repo.UserRepo;
 
 
 
 @RestController
 @ResponseBody
-public class HelloWorldController {
+@CrossOrigin(origins ="http://localhost:5173")
+public class Controller {
+	
+	@Autowired
+	org.springframework.core.env.Environment env;	 
+	
+	@Autowired
+	UserRepo repo;
 	
 	
 	@RequestMapping("/test")
@@ -30,13 +44,15 @@ public class HelloWorldController {
 	public  ArrayList<String> getAllUserNames() throws Exception{
 		java.sql.Connection	con = null;
 		String query ="select * from studs";
-		String url ="jdbc:postgresql://localhost:5432/pratik_jdbc";
-		String username = "postgres";
-		String passward ="Pratik@514";
+		DBconfig config = new DBconfig();
+		config.setUrl(env.getRequiredProperty("spring.datasource.url"));
+		config.setUsername(env.getRequiredProperty("spring.datasource.username"));
+		config.setPassword(env.getRequiredProperty("spring.datasource.password"));
+		
 		ArrayList<String> nameList = new ArrayList<String>();
 		
 		try {
-			con = DriverManager.getConnection((url),(username),(passward));
+			con = DriverManager.getConnection((config.getUrl()),(config.getUsername()),(config.getPassword()));
 			System.out.println("connected to DB");
 		} catch (SQLException e) {
 			System.out.println("error while connecting to DB");
