@@ -8,20 +8,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Users {
+public class UsersDto {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int roll_no ;
+	private String roll_no ;
 	private String name ;
 	private String emai_id ;
 	private String location ;
 	
 	
-	public int getRoll_no() {
+
+	public String getRoll_no() {
 		return roll_no;
 	}
-	public void setRoll_no(int roll_no) {
+	public void setRoll_no(String roll_no) {
 		this.roll_no = roll_no;
 	}
 	public String getName() {

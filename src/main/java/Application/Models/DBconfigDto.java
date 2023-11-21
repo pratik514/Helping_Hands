@@ -1,6 +1,6 @@
 package Application.Models;
 
-public class DBconfig {
+public class DBconfigDto {
 	
 	private String url;
 	private String username;
