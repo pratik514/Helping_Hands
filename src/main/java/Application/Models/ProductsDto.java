@@ -6,7 +6,7 @@ public class ProductsDto {
 	private String products; 
 	private boolean inStock;
 	private int offer;
-	private int price;
+	private double price;
 	private int quantity;
 	private int reqQuantity;
 	private int productId;
@@ -44,10 +44,11 @@ public class ProductsDto {
 	public void setOffer(int offer) {
 		this.offer = offer;
 	}
-	public int getPrice() {
+
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	public int getProductId() {

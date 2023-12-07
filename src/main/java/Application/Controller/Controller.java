@@ -23,12 +23,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import Application.Models.CustomerDto;
 import Application.Models.DBconfigDto;
+import Application.Models.InvoiceDto;
 import Application.Models.ProductsDto;
-import Application.Models.UsersDto;
 import Application.Repo.UserRepo;
 import Application.Service.ServiceImp;
 
@@ -53,7 +55,8 @@ public class Controller {
 	private static final String GET_NAMES = "/names";
 	private static final String PRODUCTS = "/products";
 	private static final String PURCHASE_ORDER = "/purchase";
-	
+	private static final String INVOICE = "/invoice";
+	private static final String ORDERS = "/orders";
 	
 	
 	
@@ -79,8 +82,8 @@ public class Controller {
 	}
 
 	@RequestMapping(value=GET_NAMES, method= RequestMethod.GET )
-	public List<UsersDto> getAllUserNames() throws Exception {
-		List<UsersDto> usernames = new ArrayList<UsersDto>();
+	public List<CustomerDto> getAllUserNames() throws Exception {
+		List<CustomerDto> usernames = new ArrayList<CustomerDto>();
 		try {
 			logger.info("getAllUserNames method started ........");
 			usernames = serveImp.allUserNames();
@@ -99,6 +102,7 @@ public class Controller {
 		try {
 			logger.info("getAllProducts method started ........");
 			productList = serveImp.allProducts();
+			
 			logger.info("getAllProducts method ended ........");
 			
 		} catch (Exception e) {
@@ -110,10 +114,12 @@ public class Controller {
 	}
 	
 	@RequestMapping(value=PURCHASE_ORDER, method= RequestMethod.POST)
-	public void purchaseOrder(@RequestBody ProductsDto productDto ) throws Exception {
+	public void purchaseOrder(@RequestBody ProductsDto productDto) throws Exception {
 			try {
 				logger.info("purchaseOrder method started ........");
 				 serveImp.getPurchaseOrder(productDto);
+
+				 
 				logger.info("purchaseOrder method ended ........");
 
 			} catch (Exception e) {
@@ -122,5 +128,39 @@ public class Controller {
 			}
 			
 		}
+	
+	@RequestMapping(value=INVOICE, method= RequestMethod.POST)
+	public void invoiceGeneration(@RequestBody InvoiceDto invoiceDto) throws Exception {
+			try {
+				logger.info("invoiceGeneration method started ........");
+				 serveImp.invoiceGeneration(invoiceDto);
+				
+				 
+				logger.info("invoiceGeneration method ended ........");
+
+			} catch (Exception e) {
+				logger.error("error occured in  Controller::invoiceGeneration() ........");
+				e.printStackTrace();				
+			}
+			
+		}
+	
+	@RequestMapping(value=ORDERS, method= RequestMethod.POST )
+	public List<InvoiceDto> ordersDetails(@RequestParam("email_Id") String emailId) throws Exception {
+		List<InvoiceDto> orderList = new ArrayList<InvoiceDto>();
+		try {
+			logger.info("ordersDetails method started ........");
+			orderList = serveImp.ordersDetails(emailId);
+			
+			logger.info("ordersDetails method ended ........");
+			
+		} catch (Exception e) {
+			logger.error("error occured in  Controller::getAllProducts() ........");
+			e.printStackTrace();
+		}
+		return orderList;
+
+	}
+	
 	}
 	

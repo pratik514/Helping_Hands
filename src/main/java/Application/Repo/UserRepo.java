@@ -2,8 +2,8 @@ package Application.Repo;
 
 import org.springframework.data.repository.CrudRepository;
 
-import Application.Models.UsersDto;
+import Application.Models.CustomerDto;
 
-public interface UserRepo extends CrudRepository<UsersDto, Integer> {
+public interface UserRepo extends CrudRepository<CustomerDto, Integer> {
 
 }

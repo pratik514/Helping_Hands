@@ -8,22 +8,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class UsersDto {
+public class CustomerDto {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String roll_no ;
+	private int phoneNo ;
 	private String name ;
 	private String emai_id ;
 	private String location ;
-	
-	
 
-	public String getRoll_no() {
-		return roll_no;
+
+	public int getPhoneNo() {
+		return phoneNo;
 	}
-	public void setRoll_no(String roll_no) {
-		this.roll_no = roll_no;
+	public void setPhoneNo(int phoneNo) {
+		this.phoneNo = phoneNo;
 	}
 	public String getName() {
 		return name;
@@ -43,15 +42,5 @@ public class UsersDto {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-
-
-	@Override
-	public String toString() {
-		return "Users [roll_no=" + roll_no + ", name=" + name + ", emai_id=" + emai_id + ", location=" + location + "]";
-	}
-	
-	
-		
-	
 
 }
