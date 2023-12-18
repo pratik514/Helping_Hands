@@ -12,16 +12,17 @@ public class CustomerDto {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int phoneNo ;
-	private String name ;
-	private String emai_id ;
-	private String location ;
+	private String name;
+	private String email_id;
+	private String location;
+	private long phoneNo;
+	private String password;
 
 
-	public int getPhoneNo() {
+	public long getPhoneNo() {
 		return phoneNo;
 	}
-	public void setPhoneNo(int phoneNo) {
+	public void setPhoneNo(long phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 	public String getName() {
@@ -30,17 +31,24 @@ public class CustomerDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getEmai_id() {
-		return emai_id;
+
+	public String getEmail_id() {
+		return email_id;
 	}
-	public void setEmai_id(String emai_id) {
-		this.emai_id = emai_id;
+	public void setEmail_id(String email_id) {
+		this.email_id = email_id;
 	}
 	public String getLocation() {
 		return location;
 	}
 	public void setLocation(String location) {
 		this.location = location;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

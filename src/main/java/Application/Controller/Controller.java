@@ -1,6 +1,5 @@
 package Application.Controller;
 
-
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,14 +33,12 @@ import Application.Models.ProductsDto;
 import Application.Repo.UserRepo;
 import Application.Service.ServiceImp;
 
-
-
 @RestController
 @ResponseBody
 @CrossOrigin(origins ="http://localhost:5173")
 public class Controller {
 	private static final Logger logger = LogManager.getLogger(Controller.class);
-	
+
 	@Autowired
 	org.springframework.core.env.Environment env;
 
@@ -50,45 +47,40 @@ public class Controller {
 
 	@Autowired
 	ServiceImp serveImp;
-	
+
 	private static final String TEST = "/test";
 	private static final String GET_NAMES = "/names";
 	private static final String PRODUCTS = "/products";
 	private static final String PURCHASE_ORDER = "/purchase";
 	private static final String INVOICE = "/invoice";
 	private static final String ORDERS = "/orders";
-	
-	
-	
-	
-	
-	
-	@RequestMapping(value =TEST, method = RequestMethod.GET)
+	private static final String CREATE_NEW_ACCOUNT = "/createNewAccount";
+
+	@RequestMapping(value = TEST, method = RequestMethod.GET)
 	public String test() {
-	
-			String gritting="";
-			try {
-				logger.info("test method started ........");
-				gritting = serveImp.hello();
-				logger.info("test method ended ........");
-				
-			} catch (Exception e) {
-				logger.error("error occured in  Controller::test() ........");
-				e.printStackTrace();
-			}
-			return gritting;
-			
-				
+
+		String gritting = "";
+		try {
+			logger.info("test method started ........");
+			gritting = serveImp.hello();
+			logger.info("test method ended ........");
+
+		} catch (Exception e) {
+			logger.error("error occured in  Controller::test() ........");
+			e.printStackTrace();
+		}
+		return gritting;
+
 	}
 
-	@RequestMapping(value=GET_NAMES, method= RequestMethod.GET )
+	@RequestMapping(value = GET_NAMES, method = RequestMethod.GET)
 	public List<CustomerDto> getAllUserNames() throws Exception {
 		List<CustomerDto> usernames = new ArrayList<CustomerDto>();
 		try {
 			logger.info("getAllUserNames method started ........");
 			usernames = serveImp.allUserNames();
 			logger.info("getAllUserNames method ended ........");
-			
+
 		} catch (Exception e) {
 			logger.error("error occured in  Controller::getAllUserNames() ........");
 			e.printStackTrace();
@@ -96,7 +88,8 @@ public class Controller {
 		return usernames;
 
 	}
-	@RequestMapping(value=PRODUCTS, method= RequestMethod.GET )
+
+	@RequestMapping(value = PRODUCTS, method = RequestMethod.GET)
 	public List<ProductsDto> getAllProducts() throws Exception {
 		List<ProductsDto> productList = new ArrayList<ProductsDto>();
 		try {
@@ -104,7 +97,7 @@ public class Controller {
 			productList = serveImp.allProducts();
 			
 			logger.info("getAllProducts method ended ........");
-			
+
 		} catch (Exception e) {
 			logger.error("error occured in  Controller::getAllProducts() ........");
 			e.printStackTrace();
@@ -112,48 +105,43 @@ public class Controller {
 		return productList;
 
 	}
-	
-	@RequestMapping(value=PURCHASE_ORDER, method= RequestMethod.POST)
+
+	@RequestMapping(value = PURCHASE_ORDER, method = RequestMethod.POST)
 	public void purchaseOrder(@RequestBody ProductsDto productDto) throws Exception {
-			try {
-				logger.info("purchaseOrder method started ........");
-				 serveImp.getPurchaseOrder(productDto);
+		try {
+			logger.info("purchaseOrder method started ........");
+			serveImp.getPurchaseOrder(productDto);
+			logger.info("purchaseOrder method ended ........");
 
-				 
-				logger.info("purchaseOrder method ended ........");
-
-			} catch (Exception e) {
-				logger.error("error occured in  Controller::purchaseOrder() ........");
-				e.printStackTrace();				
-			}
-			
+		} catch (Exception e) {
+			logger.error("error occured in  Controller::purchaseOrder() ........");
+			e.printStackTrace();
 		}
-	
-	@RequestMapping(value=INVOICE, method= RequestMethod.POST)
+
+	}
+
+	@RequestMapping(value = INVOICE, method = RequestMethod.POST)
 	public void invoiceGeneration(@RequestBody InvoiceDto invoiceDto) throws Exception {
-			try {
-				logger.info("invoiceGeneration method started ........");
-				 serveImp.invoiceGeneration(invoiceDto);
-				
-				 
-				logger.info("invoiceGeneration method ended ........");
+		try {
+			logger.info("invoiceGeneration method started ........");
+			serveImp.invoiceGeneration(invoiceDto);
+			logger.info("invoiceGeneration method ended ........");
 
-			} catch (Exception e) {
-				logger.error("error occured in  Controller::invoiceGeneration() ........");
-				e.printStackTrace();				
-			}
-			
+		} catch (Exception e) {
+			logger.error("error occured in  Controller::invoiceGeneration() ........");
+			e.printStackTrace();
 		}
-	
-	@RequestMapping(value=ORDERS, method= RequestMethod.POST )
+
+	}
+
+	@RequestMapping(value = ORDERS, method = RequestMethod.POST)
 	public List<InvoiceDto> ordersDetails(@RequestParam("email_Id") String emailId) throws Exception {
 		List<InvoiceDto> orderList = new ArrayList<InvoiceDto>();
 		try {
 			logger.info("ordersDetails method started ........");
 			orderList = serveImp.ordersDetails(emailId);
-			
 			logger.info("ordersDetails method ended ........");
-			
+
 		} catch (Exception e) {
 			logger.error("error occured in  Controller::getAllProducts() ........");
 			e.printStackTrace();
@@ -161,6 +149,18 @@ public class Controller {
 		return orderList;
 
 	}
-	
+
+	@RequestMapping(value = CREATE_NEW_ACCOUNT, method = RequestMethod.POST)
+	public void createNewAccount(@RequestBody CustomerDto customerDto) throws Exception {
+		try {
+			logger.info("createNewAccount method started ........");
+			serveImp.createNewAccount(customerDto);
+			logger.info("createNewAccount method ended ........");
+
+		} catch (Exception e) {
+			logger.error("error occured in  Controller::createNewAccount() ........");
+			e.printStackTrace();
+		}
+
 	}
-	
+}

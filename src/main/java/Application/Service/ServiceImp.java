@@ -228,4 +228,42 @@ public class ServiceImp {
 		}
 		return detailsList;
 	}
+	
+	public void createNewAccount(CustomerDto customerDto) throws Exception {
+		java.sql.Connection con = null;
+		String query ="INSERT INTO public.\"Customers\"(\r\n"
+				+ "	name, email_id, location, \"phoneNo\", password)\r\n"
+				+ "	VALUES (?, ?, ?, ?, ?);" ;
+				
+		DBconfigDto config = new DBconfigDto();
+		config.setUrl(env.getRequiredProperty("spring.datasource.url"));
+		config.setUsername(env.getRequiredProperty("spring.datasource.username"));
+		config.setPassword(env.getRequiredProperty("spring.datasource.password"));
+		ResultSet rs = null;
+ 
+
+		try {
+			logger.info("invoiceGeneration method started ........");
+			con = DriverManager.getConnection((config.getUrl()), (config.getUsername()), (config.getPassword()));
+			logger.info("connection established");
+			PreparedStatement pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, customerDto.getName());
+			pstmt.setString(2, customerDto.getEmail_id());
+			pstmt.setString(3, customerDto.getLocation());
+			pstmt.setLong(4, customerDto.getPhoneNo());
+			pstmt.setString(5, customerDto.getPassword());
+			 
+			
+			pstmt.executeUpdate();
+			
+			logger.info("invoiceGeneration method ended ........");
+			
+		} catch (Exception e) {
+			logger.error("error occured in  ServiceImp :: allUserNames() ........");
+			e.printStackTrace();
+		}finally {
+		con.close();
+		}
+	}
 }
